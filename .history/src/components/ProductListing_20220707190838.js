@@ -25,7 +25,6 @@ const ProductListing = () => {
         result => {
           setIsLoaded(true)
           setItems(result)
-          console.log(result)
         },
         error => {
           setIsLoaded(true)
@@ -67,10 +66,10 @@ const ProductListing = () => {
             >
               <Image w='100%' src={item.images} objectFit='cover' bg='blue' />
 
-              <Box pb={8} px={3}>
+              <Box pb={8} px={3} bg='green'>
                 <Box display='flex'>
                   <Box mt='1' fontWeight='semibold'>
-                    <Text fontWeight='normal'>{item.title}</Text>
+                    <Text>{item.title}</Text>
                   </Box>
                 </Box>
               </Box>

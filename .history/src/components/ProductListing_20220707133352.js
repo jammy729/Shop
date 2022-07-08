@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import {
   Container,
   Text,
@@ -18,20 +19,34 @@ const ProductListing = () => {
   const [items, setItems] = useState([])
   const [mobile] = useMediaQuery('(min-width: 1280px)')
 
+  // useEffect(() => {
+  //   fetch('https://api.escuelajs.co/api/v1/products?offset=0&limit=8')
+  //     .then(res => res.json())
+  //     .then(
+  //       result => {
+  //         setIsLoaded(true)
+  //         setItems(result)
+
+  //       },
+  //       error => {
+  //         setIsLoaded(true)
+  //         setError(error)
+  //       }
+  //     )
+  // }, [])
+
   useEffect(() => {
-    fetch('https://api.escuelajs.co/api/v1/products?offset=0&limit=8')
-      .then(res => res.json())
-      .then(
-        result => {
-          setIsLoaded(true)
-          setItems(result)
-          console.log(result)
-        },
-        error => {
-          setIsLoaded(true)
-          setError(error)
-        }
-      )
+    setIsLoaded(true)
+    axios({
+      method: 'GET',
+      baseURL: 'http://api.fakeshop-api.com',
+      url: '/products/getAllProducts'
+    })
+      .then(({ items }) => {
+        setItems(items.products)
+      })
+      .catch(err => console.dir(err))
+      .finally(() => setIsLoaded(false))
   }, [])
 
   if (error) {
@@ -55,7 +70,7 @@ const ProductListing = () => {
     )
   } else {
     return (
-      <Container centerContent maxW={!mobile ? '100vw' : '100vw'}>
+      <Container centerContent maxW={!mobile ? '100vw' : '70vw'}>
         <SimpleGrid columns={!mobile ? '2' : '3'}>
           {items.map(item => (
             <Box
@@ -65,12 +80,12 @@ const ProductListing = () => {
               key={item.id}
               m={2}
             >
-              <Image w='100%' src={item.images} objectFit='cover' bg='blue' />
+              <Image w='100%' src={item.name} objectFit='cover' bg='blue' />
 
-              <Box pb={8} px={3}>
+              <Box p={6} bg='green'>
                 <Box display='flex'>
                   <Box mt='1' fontWeight='semibold'>
-                    <Text fontWeight='normal'>{item.title}</Text>
+                    <Text>{item.price}</Text>
                   </Box>
                 </Box>
               </Box>

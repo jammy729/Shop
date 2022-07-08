@@ -25,7 +25,6 @@ const ProductListing = () => {
         result => {
           setIsLoaded(true)
           setItems(result)
-          console.log(result)
         },
         error => {
           setIsLoaded(true)
@@ -70,7 +69,7 @@ const ProductListing = () => {
               <Box pb={8} px={3}>
                 <Box display='flex'>
                   <Box mt='1' fontWeight='semibold'>
-                    <Text fontWeight='normal'>{item.title}</Text>
+                    <Text fontWeight={}>{item.title}</Text>
                   </Box>
                 </Box>
               </Box>

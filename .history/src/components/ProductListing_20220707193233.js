@@ -19,13 +19,14 @@ const ProductListing = () => {
   const [mobile] = useMediaQuery('(min-width: 1280px)')
 
   useEffect(() => {
+
     fetch('https://api.escuelajs.co/api/v1/products?offset=0&limit=8')
       .then(res => res.json())
       .then(
         result => {
           setIsLoaded(true)
           setItems(result)
-          console.log(result)
+          console.log
         },
         error => {
           setIsLoaded(true)

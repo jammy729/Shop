@@ -25,7 +25,6 @@ const ProductListing = () => {
         result => {
           setIsLoaded(true)
           setItems(result)
-          console.log(result)
         },
         error => {
           setIsLoaded(true)
@@ -55,8 +54,8 @@ const ProductListing = () => {
     )
   } else {
     return (
-      <Container centerContent maxW={!mobile ? '100vw' : '100vw'}>
-        <SimpleGrid columns={!mobile ? '2' : '3'}>
+      <Container centerContent maxW={!mobile ? '100vw' : '70vw'}>
+        <SimpleGrid columns={!mobile ? '2' : '4'}>
           {items.map(item => (
             <Box
               maxW='100%'
@@ -65,12 +64,18 @@ const ProductListing = () => {
               key={item.id}
               m={2}
             >
-              <Image w='100%' src={item.images} objectFit='cover' bg='blue' />
+              <Image
+                w='100%'
+                maxW='cover'
+                src={item.images}
+                objectFit='cover'
+                bg='blue'
+              />
 
-              <Box pb={8} px={3}>
-                <Box display='flex'>
+              <Box p={6}>
+                <Box display='flex' alignItems='baseline'>
                   <Box mt='1' fontWeight='semibold'>
-                    <Text fontWeight='normal'>{item.title}</Text>
+                    <Text>{item.title}</Text>
                   </Box>
                 </Box>
               </Box>

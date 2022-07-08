@@ -7,8 +7,7 @@ import {
   Center,
   SimpleGrid,
   Image,
-  Spinner,
-  Progress
+  Spinnw
 } from '@chakra-ui/react'
 import { useMediaQuery } from '@chakra-ui/react'
 
@@ -19,13 +18,12 @@ const ProductListing = () => {
   const [mobile] = useMediaQuery('(min-width: 1280px)')
 
   useEffect(() => {
-    fetch('https://api.escuelajs.co/api/v1/products?offset=0&limit=8')
+    fetch('https://fakestoreapi.com/products?limit=5')
       .then(res => res.json())
       .then(
         result => {
           setIsLoaded(true)
           setItems(result)
-          console.log(result)
         },
         error => {
           setIsLoaded(true)
@@ -48,29 +46,30 @@ const ProductListing = () => {
           speed='0.65s'
           emptyColor='gray.200'
           color='blue.500'
-          boxSize={60}
+          size='xl'
         />
         Loading
       </Container>
     )
   } else {
     return (
-      <Container centerContent maxW={!mobile ? '100vw' : '100vw'}>
-        <SimpleGrid columns={!mobile ? '2' : '3'}>
+      <Container centerContent maxW='100vw'>
+        <SimpleGrid columns={!mobile ? '2' : '4'}>
           {items.map(item => (
             <Box
-              maxW='100%'
+              maxW='3xl'
+              maxH='auto'
               overflow='hidden'
               borderWidth='1px'
               key={item.id}
-              m={2}
+              m={4}
             >
-              <Image w='100%' src={item.images} objectFit='cover' bg='blue' />
+              <Image boxSize='md' src={item.image} objectFit='fill' />
 
-              <Box pb={8} px={3}>
-                <Box display='flex'>
+              <Box p={6}>
+                <Box display='flex' alignItems='baseline'>
                   <Box mt='1' fontWeight='semibold'>
-                    <Text fontWeight='normal'>{item.title}</Text>
+                    {item.title}
                   </Box>
                 </Box>
               </Box>

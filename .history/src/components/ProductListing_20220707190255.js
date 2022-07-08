@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import {
   Container,
   Text,
@@ -14,8 +15,8 @@ import { useMediaQuery } from '@chakra-ui/react'
 
 const ProductListing = () => {
   const [error, setError] = useState(null)
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [items, setItems] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [data, setData] = useState(null)
   const [mobile] = useMediaQuery('(min-width: 1280px)')
 
   useEffect(() => {
@@ -25,7 +26,7 @@ const ProductListing = () => {
         result => {
           setIsLoaded(true)
           setItems(result)
-          console.log(result)
+
         },
         error => {
           setIsLoaded(true)
@@ -33,14 +34,12 @@ const ProductListing = () => {
         }
       )
   }, [])
-
-  if (error) {
+  
     return (
       <Container centerContent>
         <Text fontWeight='semibold'> Error: {error.message}</Text>
       </Container>
-    )
-  } else if (!isLoaded) {
+    ) { else if (!loading) {
     return (
       <Container centerContent>
         <Spinner
@@ -54,32 +53,32 @@ const ProductListing = () => {
       </Container>
     )
   } else {
-    return (
-      <Container centerContent maxW={!mobile ? '100vw' : '100vw'}>
-        <SimpleGrid columns={!mobile ? '2' : '3'}>
-          {items.map(item => (
+  return (
+    <Container centerContent maxW={!mobile ? '100vw' : '70vw'}>
+      <SimpleGrid columns={!mobile ? '2' : '3'}>
+      
+        {data.map(product => (
             <Box
               maxW='100%'
               overflow='hidden'
               borderWidth='1px'
-              key={item.id}
+              key={product.id}
               m={2}
             >
-              <Image w='100%' src={item.images} objectFit='cover' bg='blue' />
+              <Image w='100%' src={product.name} objectFit='cover' bg='blue' />
 
-              <Box pb={8} px={3}>
+              <Box p={6} bg='green'>
                 <Box display='flex'>
                   <Box mt='1' fontWeight='semibold'>
-                    <Text fontWeight='normal'>{item.title}</Text>
+                    <Text>{product.price}</Text>
                   </Box>
                 </Box>
               </Box>
             </Box>
           ))}
-        </SimpleGrid>
-      </Container>
-    )
-  }
+      </SimpleGrid>
+    </Container>
+  )
 }
 
 export default ProductListing
